@@ -18,5 +18,14 @@ export default {
     homeHTML: 'home/index.html',
     controllerHTML: 'controller/index.html',
   },
-  location: '/home'
+  location: {
+    home: '/home'
+  },
+  constants: {
+    CONTENT_TYPE: {
+      '.html': 'text/html',
+      '.css': 'text/css',
+      '.js': 'text/javascript',
+    }
+  }
 }
