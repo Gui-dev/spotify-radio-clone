@@ -44,7 +44,28 @@ describe('#Routes - test site for api response', () => {
     )
     expect(mockFileStream.pipe).toHaveBeenCalledWith(params.response)
   })
-  it.todo(`GET /controller - should response with ${config.pages.controllerHTML} file stream`)
+  it(`GET /controller - should response with ${config.pages.controllerHTML} file stream`, async () => {
+    const params = TestUtil.defautlHandleParams()
+    params.request.method = 'GET'
+    params.request.url = '/controller'
+    const mockFileStream = TestUtil.generateReadableStream(['fake data'])
+    jest.spyOn(
+      Controller.prototype,
+      Controller.prototype.getFileStream.name
+    ).mockResolvedValue({
+      stream: mockFileStream
+    })
+    jest.spyOn(
+      mockFileStream,
+      'pipe'
+    ).mockReturnValue()
+    await handler(...params.values())
+
+    expect(Controller.prototype.getFileStream).toHaveBeenCalledWith(
+      config.pages.controllerHTML
+    )
+    expect(mockFileStream.pipe).toHaveBeenCalledWith(params.response)
+  })
   it.todo(`GET /file.ext - should response with file stream`)
   it.todo(`GET /404 - given an inexistent route it should response with 404`)
 
