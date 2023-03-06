@@ -116,9 +116,9 @@ describe('#Routes - test site for api response', () => {
     expect(mockFileStream.pipe).toHaveBeenCalledWith(params.response)
     expect(params.response.writeHead).not.toHaveBeenCalled()
   })
-  it('GET /unknown - given an inexistent route it should response with 404', async () => {
+  it('POST /unknown - given an inexistent route it should response with 404', async () => {
     const params = TestUtil.defautlHandleParams()
-    params.request.method = 'GET'
+    params.request.method = 'POST'
     params.request.url = '/unknown'
     await handler(...params.values())
 
