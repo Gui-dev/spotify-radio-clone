@@ -1,10 +1,30 @@
 import fs from 'node:fs'
 import { access } from 'node:fs/promises'
 import { extname, join } from 'node:path'
+import { randomUUID } from 'node:crypto'
+import { PassThrough } from 'node:stream'
 
 import config from './config.js'
 
 export class Service {
+  constructor() {
+    this.clientStreams = new Map()
+  }
+
+  getClientStream () {
+    const id = randomUUID()
+    const clientStream = new PassThrough()
+    this.clientStreams.set(id, clientStream)
+    return {
+      id,
+      clientStream
+    }
+  }
+
+  removeClientStream (id) {
+    this.clientStreams.delete(id)
+  }
+
   createFileStream (filename) {
     return fs.createReadStream(filename)
   }
