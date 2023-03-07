@@ -1,0 +1,19 @@
+version: '2.16'
+services:
+  dev:
+    image: spotify-radio
+    build: .
+    environment:
+      PORT: 3333
+    command:
+      - npm
+      - run
+      - dev
+    volumes:
+      - .:/spotify-radio
+      - node_modules:/spotify-radio/node_modules
+    ports:
+      - 3333:3333
+
+volumes:
+  node_modules: {}
