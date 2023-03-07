@@ -3,15 +3,16 @@ import { fileURLToPath } from 'node:url'
 
 const currentDir = dirname(fileURLToPath(import.meta.url))
 const root = join(currentDir, '../../')
-const audioDirectory = join(root, 'web/audio')
 const publicDirectory = join(root, 'web/public')
+const audioDirectory = join(root, 'web/audio')
+const songsDirectory = join(audioDirectory, 'songs')
 
 export default {
   dir: {
     root,
     publicDirectory,
     audioDirectory,
-    songsDirectory: join(audioDirectory, 'songs'),
+    songsDirectory,
     fxDirectory: join(audioDirectory, 'fx')
   },
   pages: {
@@ -26,6 +27,10 @@ export default {
       '.html': 'text/html',
       '.css': 'text/css',
       '.js': 'text/javascript',
-    }
+    },
+    audioMediaType: 'mp3',
+    songVolume: '0.99',
+    fallbackBitRate: '128000',
+    englishConversation: join(songsDirectory, 'conversation.mp3')
   }
 }
