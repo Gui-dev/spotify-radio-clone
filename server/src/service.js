@@ -47,6 +47,10 @@ export class Service {
     )
   }
 
+  stopStreamming () {
+    this.throttleTransform?.end?.()
+  }
+
   createClientStream () {
     const id = randomUUID()
     const clientStream = new PassThrough()
