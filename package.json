@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node 'server/src/index.js'",
     "dev": "nodemon --ignore node_modules --ignore __tests__ 'server/src/index.js'",
-    "dev:docker": "docker compose up dev",
+    "dev:docker": "docker compose up --build dev",
     "test": "LOG_DISABLED=true NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --no-cache",
     "test:watch": "LOG_DISABLED=true NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --no-cache --watchAll",
     "test:coverage": "LOG_DISABLED=true NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --no-cache --coverage 'server/src/__tests__' 'web/public/__tests__'"
