@@ -18,8 +18,6 @@ export class Service {
     this.currentBitRate = 0
     this.throttleTransform = {}
     this.currentReadable = {}
-
-    this.startStreamming()
   }
 
   broadCast () {
