@@ -37,7 +37,7 @@ export default {
         'web/public'
       ],
       testMatch: [
-        '**/server/src/__tests__/*.spec.js'
+        '**/server/src/__tests__/**/*.spec.js'
       ]
     },
     {
@@ -52,7 +52,7 @@ export default {
         'web/public'
       ],
       testMatch: [
-        '**/web/public/__tests__/*.spec.js'
+        '**/web/public/__tests__/**/*.spec.js'
       ]
     }
   ]
