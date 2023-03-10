@@ -11,8 +11,10 @@
     "test": "LOG_DISABLED=true NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --no-cache",
     "test:watch": "LOG_DISABLED=true NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --no-cache --watchAll",
     "test:coverage": "LOG_DISABLED=true NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --no-cache --coverage 'server/src/__tests__' 'web/public/__tests__'",
-    "test:e2e-watch:docker": "docker compose up --build test-e2e",
-    "test:docker": "docker compose up --build test"
+    "test:e2e": "LOG_DISABLED=true NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --no-cache 'server/src/__tests__' 'web/public/__tests__'",
+    "test:docker": "docker compose up --build test",
+    "test:watch:docker": "docker compose up --build test-watch",
+    "test:coverage:docker": "docker compose up --build test-coverage"
   },
   "keywords": [],
   "author": "",
