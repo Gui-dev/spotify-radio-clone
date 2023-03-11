@@ -20,37 +20,6 @@ export class Service {
     this.currentReadable = {}
   }
 
-  broadCast () {
-    return new Writable({
-      write: (chunk, encode, callback) => {
-        for (const [id, stream] of this.clientStreams) {
-          if (stream.writableEnded) {
-            this.clientStreams.delete(id)
-            continue
-          }
-          stream.write(chunk)
-        }
-        callback()
-      }
-    })
-  }
-
-  async startStreamming () {
-    logger.info(`starting with ${this.currentSong}`)
-    const bitRate = this.currentBitRate = (await this.getBitRate(this.currentSong) / config.constants.bitRateDivisor)
-    const throttleTransform = this.throttleTransform = new Throttle(bitRate)
-    const songReadable = this.currentReadable = this.createFileStream(this.currentSong)
-    return pipeline(
-      songReadable,
-      throttleTransform,
-      this.broadCast()
-    )
-  }
-
-  stopStreamming () {
-    this.throttleTransform?.end?.()
-  }
-
   createClientStream () {
     const id = randomUUID()
     const clientStream = new PassThrough()
@@ -96,6 +65,37 @@ export class Service {
       logger.error(`Deu erro no bitrate ${error}`)
       return config.constants.fallbackBitRate
     }
+  }
+
+  broadCast () {
+    return new Writable({
+      write: (chunk, encode, callback) => {
+        for (const [id, stream] of this.clientStreams) {
+          if (stream.writableEnded) {
+            this.clientStreams.delete(id)
+            continue
+          }
+          stream.write(chunk)
+        }
+        callback()
+      }
+    })
+  }
+
+  async startStreamming () {
+    logger.info(`starting with ${this.currentSong}`)
+    const bitRate = this.currentBitRate = (await this.getBitRate(this.currentSong) / config.constants.bitRateDivisor)
+    const throttleTransform = this.throttleTransform = new Throttle(bitRate)
+    const songReadable = this.currentReadable = this.createFileStream(this.currentSong)
+    return pipeline(
+      songReadable,
+      throttleTransform,
+      this.broadCast()
+    )
+  }
+
+  stopStreamming () {
+    this.throttleTransform?.end?.()
   }
 
   createFileStream (filename) {
