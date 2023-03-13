@@ -1,8 +1,8 @@
 import { beforeEach, describe, expect, it, jest, } from '@jest/globals'
 
-import { Controller } from './../controller'
+import { Controller } from './../controller.js'
 import { TestUtil } from './_util/test-util.js'
-import { handler } from './../routes'
+import { handler } from './../routes.js'
 import config from './../config.js'
 
 describe('#Routes - test site for api response', () => {

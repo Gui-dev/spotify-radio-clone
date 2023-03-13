@@ -1,13 +1,12 @@
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
-
+import { join, dirname } from 'path'
+import { fileURLToPath } from 'url'
 const currentDir = dirname(fileURLToPath(import.meta.url))
-const root = join(currentDir, '../../')
-const publicDirectory = join(root, 'web/public')
-const audioDirectory = join(root, 'web/audio')
+const root = join(currentDir, '../')
+const audioDirectory = join(root, 'audio')
+const publicDirectory = join(root, 'public')
 const songsDirectory = join(audioDirectory, 'songs')
-
 export default {
+  port: process.env.PORT || 3333,
   dir: {
     root,
     publicDirectory,
@@ -35,3 +34,4 @@ export default {
     englishConversation: join(songsDirectory, 'conversation.mp3')
   }
 }
+

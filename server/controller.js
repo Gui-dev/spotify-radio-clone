@@ -1,33 +1,43 @@
-import { Service } from './service.js'
-import { logger } from './util/logger.js'
+import {
+  Service
+} from "./service.js"
+import {
+  logger
+} from "./util.js"
 
 export class Controller {
   constructor() {
     this.service = new Service()
   }
 
-  async getFileStream (filename) {
+  async getFileStream(filename) {
     return this.service.getFileStream(filename)
   }
-
-  async handleCommand ({ command }) {
+  async handleCommand({ command }) {
     logger.info(`command received: ${command}`)
-    const cmd = command.toLowerCase()
     const result = {
       result: 'ok'
     }
-    if (cmd.includes('start')) {
+
+    const cmd = command.toLowerCase()
+    if(cmd.includes('start')) {
       this.service.startStreamming()
       return result
     }
-    if (cmd.includes('stop')) {
+
+    if(cmd.includes('stop')) {
       this.service.stopStreamming()
       return result
     }
+    
   }
 
-  createClientStream () {
-    const { id, clientStream } = this.service.createClientStream()
+  createClientStream() {
+    const {
+      id,
+      clientStream
+    } = this.service.createClientStream()
+
     const onClose = () => {
       logger.info(`closing connection of ${id}`)
       this.service.removeClientStream(id)
@@ -38,4 +48,5 @@ export class Controller {
       onClose
     }
   }
+
 }
