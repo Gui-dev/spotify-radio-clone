@@ -1,16 +1,16 @@
 
-export default class View {
+export class View {
   onLoad () {
     this.changeCommandButtonsVisibility()
   }
 
   changeCommandButtonsVisibility (hide = true) {
     Array.from(document.querySelectorAll('[name=command]'))
-      .forEach(button => {
+      .forEach(btn => {
         const fn = hide ? 'add' : 'remove'
-        button.classList[fn]('unassigned')
-        const onClickReset = () => { }
-        button.onClick = onClickReset
+        btn.classList[fn]('unassigned')
+        function onClickReset () { }
+        btn.onclick = onClickReset
       })
   }
 }
