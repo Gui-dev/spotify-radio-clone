@@ -29,30 +29,31 @@ export default {
       testEnvironment: 'node',
       displayName: 'backend',
       collectCoverageFrom: [
-        'server/src/',
-        '!server/src/index.js'
+        'server/',
+        '!server/index.js'
       ],
       transformIgnorePatterns: [
         ...defaultConfig.transformIgnorePatterns,
-        'web/public'
+        'public'
       ],
       testMatch: [
-        '**/server/src/__tests__/**/*.spec.js'
+        '**/server/__tests__/**/*.spec.js'
       ]
     },
     {
       ...defaultConfig,
       testEnvironment: 'jsdom',
+      setupFiles: [`<rootDir>/.test/jest-shim.js`],
       displayName: 'frontend',
       collectCoverageFrom: [
-        'web/public',
+        'public/',
       ],
       transformIgnorePatterns: [
         ...defaultConfig.transformIgnorePatterns,
-        'web/public'
+        'server'
       ],
       testMatch: [
-        '**/web/public/__tests__/**/*.spec.js'
+        '**/public/__tests__/**/*.spec.js'
       ]
     }
   ]
