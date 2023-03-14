@@ -41,7 +41,7 @@ export class Service {
     this.currentReadable = {}
   }
 
-  createClientStream() {
+  createClientStream () {
     const id = randomUUID()
     const clientStream = new PassThrough()
     this.clientStreams.set(id, clientStream)
@@ -53,15 +53,15 @@ export class Service {
 
   }
 
-  removeClientStream(id) {
+  removeClientStream (id) {
     this.clientStreams.delete(id)
   }
 
-  _executeSoxCommand(args) {
+  _executeSoxCommand (args) {
     return childProcess.spawn('sox', args)
   }
 
-  async getBitRate(song) {
+  async getBitRate (song) {
     try {
       const args = [
         '--i', // info
@@ -93,11 +93,10 @@ export class Service {
     }
   }
 
-  broadCast() {
+  broadCast () {
     return new Writable({
       write: (chunk, enc, cb) => {
         for (const [id, stream] of this.clientStreams) {
-          // se o cliente descontou não devemos mais mandar dados pra ele
           if (stream.writableEnded) {
             this.clientStreams.delete(id)
             continue;
@@ -110,7 +109,7 @@ export class Service {
       }
     })
   }
-  async startStreamming() {
+  async startStreamming () {
     logger.info(`starting with ${this.currentSong}`)
     const bitRate = this.currentBitRate = (await this.getBitRate(this.currentSong)) / bitRateDivisor
     const throttleTransform = this.throttleTransform = new Throttle(bitRate)
@@ -122,15 +121,15 @@ export class Service {
     )
   }
 
-  stopStreamming() {
+  stopStreamming () {
     this.throttleTransform?.end?.()
   }
 
-  createFileStream(filename) {
+  createFileStream (filename) {
     return fs.createReadStream(filename)
   }
 
-  async getFileInfo(file) {
+  async getFileInfo (file) {
     // file = home/index.html
     const fullFilePath = join(publicDirectory, file)
     // valida se existe, se não existe estoura erro!!
@@ -142,7 +141,7 @@ export class Service {
     }
   }
 
-  async getFileStream(file) {
+  async getFileStream (file) {
     const {
       name,
       type
