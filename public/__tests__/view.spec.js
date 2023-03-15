@@ -59,5 +59,14 @@ describe('#View - test suite for presentation layer ', () => {
     expect(btn.onclick.name).toStrictEqual('onClickReset')
     expect(() => btn.onclick()).not.toThrow()
   })
-  it.todo('#onLoad - given hide=true it should add unassigned class and reset onclick')
+  it('#onLoad', async () => {
+    const view = new View()
+    jest.spyOn(
+      view,
+      view.changeCommandButtonsVisibility.name
+    ).mockReturnValue()
+    view.onLoad()
+
+    expect(view.changeCommandButtonsVisibility).toHaveBeenCalled()
+  })
 })
