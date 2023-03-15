@@ -28,10 +28,6 @@ describe('#View - test suite for presentation layer ', () => {
   beforeEach(() => {
     jest.resetAllMocks()
     jest.clearAllMocks()
-    jest.spyOn(
-      document,
-      "getElementById"
-    ).mockReturnValue(makeBtnElement())
   })
 
   it('#changeCommandBtnsVisibility - given hide=true it should add unassigned class and reset onclick', () => {
@@ -47,8 +43,21 @@ describe('#View - test suite for presentation layer ', () => {
     expect(btn.classList.add).toHaveBeenCalledWith('unassigned')
     expect(btn.onclick.name).toStrictEqual('onClickReset')
     expect(() => btn.onclick()).not.toThrow()
-
   })
-  it.todo('#changeCommandButtonsVisibility - given hide=false it should remove unassigned class and reset onclick')
+  it('#changeCommandButtonsVisibility - given hide=false it should remove unassigned class and reset onclick', async () => {
+    const view = new View()
+    const btn = makeBtnElement()
+    jest.spyOn(
+      document,
+      "querySelectorAll"
+    ).mockReturnValue([btn])
+
+    view.changeCommandButtonsVisibility(false)
+
+    expect(btn.classList.add).not.toHaveBeenCalled()
+    expect(btn.classList.remove).toHaveBeenCalledWith('unassigned')
+    expect(btn.onclick.name).toStrictEqual('onClickReset')
+    expect(() => btn.onclick()).not.toThrow()
+  })
   it.todo('#onLoad - given hide=true it should add unassigned class and reset onclick')
 })
