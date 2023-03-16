@@ -17,7 +17,7 @@ const {
 } = config
 import { once } from 'events'
 const controller = new Controller()
-async function routes(request, response) {
+async function routes (request, response) {
   const {
     method,
     url
@@ -71,7 +71,7 @@ async function routes(request, response) {
     return stream.pipe(response)
   }
 
-  if(method === 'POST' && url === '/controller') {
+  if (method === 'POST' && url === '/controller') {
     const data = await once(request, 'data')
     const item = JSON.parse(data)
     const result = await controller.handleCommand(item)
@@ -100,7 +100,7 @@ async function routes(request, response) {
 
 }
 
-function handleError(error, response) {
+function handleError (error, response) {
   if (error.message.includes('ENOENT')) {
     logger.warn(`asset not found ${error.stack}`)
     response.writeHead(404)
@@ -112,8 +112,7 @@ function handleError(error, response) {
   return response.end()
 }
 
-export function handler(request, response) {
-
+export async function handler (request, response) {
   return routes(request, response)
     .catch(error => handleError(error, response))
 }

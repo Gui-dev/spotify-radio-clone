@@ -89,7 +89,7 @@ describe('#Routes - test site for api response', () => {
     expect(Controller.prototype.getFileStream).toHaveBeenCalledWith(filename)
     expect(mockFileStream.pipe).toHaveBeenCalledWith(params.response)
     expect(params.response.writeHead).toHaveBeenCalledWith(200, {
-      'CONTENT_TYPE': config.constants.CONTENT_TYPE[expectedType]
+      'Content-Type': config.constants.CONTENT_TYPE[expectedType]
     })
   })
   it('GET /file.ext - should response with file stream', async () => {

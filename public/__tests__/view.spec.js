@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it, jest, } from '@jest/globals'
 import { JSDOM } from 'jsdom'
 
-import { View } from './../controller/src/view.js'
+import View from './../controller/js/view.js'
 
 describe('#View - test suite for presentation layer ', () => {
   const dom = new JSDOM()
@@ -28,6 +28,10 @@ describe('#View - test suite for presentation layer ', () => {
   beforeEach(() => {
     jest.resetAllMocks()
     jest.clearAllMocks()
+    jest.spyOn(
+      document,
+      "getElementById"
+    ).mockReturnValue(makeBtnElement())
   })
 
   it('#changeCommandBtnsVisibility - given hide=true it should add unassigned class and reset onclick', () => {
@@ -38,13 +42,13 @@ describe('#View - test suite for presentation layer ', () => {
       "querySelectorAll"
     ).mockReturnValue([btn])
 
-    view.changeCommandButtonsVisibility()
+    view.changeCommandBtnsVisibility()
 
     expect(btn.classList.add).toHaveBeenCalledWith('unassigned')
     expect(btn.onclick.name).toStrictEqual('onClickReset')
     expect(() => btn.onclick()).not.toThrow()
   })
-  it('#changeCommandButtonsVisibility - given hide=false it should remove unassigned class and reset onclick', async () => {
+  it('#changeCommandBtnsVisibility - given hide=false it should remove unassigned class and reset onclick', async () => {
     const view = new View()
     const btn = makeBtnElement()
     jest.spyOn(
@@ -52,7 +56,7 @@ describe('#View - test suite for presentation layer ', () => {
       "querySelectorAll"
     ).mockReturnValue([btn])
 
-    view.changeCommandButtonsVisibility(false)
+    view.changeCommandBtnsVisibility(false)
 
     expect(btn.classList.add).not.toHaveBeenCalled()
     expect(btn.classList.remove).toHaveBeenCalledWith('unassigned')
@@ -63,10 +67,10 @@ describe('#View - test suite for presentation layer ', () => {
     const view = new View()
     jest.spyOn(
       view,
-      view.changeCommandButtonsVisibility.name
+      view.changeCommandBtnsVisibility.name
     ).mockReturnValue()
     view.onLoad()
 
-    expect(view.changeCommandButtonsVisibility).toHaveBeenCalled()
+    expect(view.changeCommandBtnsVisibility).toHaveBeenCalled()
   })
 })

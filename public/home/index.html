@@ -5,7 +5,7 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spotify Radio Clone</title>
+  <title>Spotify Radio - SemanaJSExpert 6.0</title>
   <link rel="stylesheet" href="./home/css/reset.css" />
   <link rel="stylesheet" href="./home/css/styles.css" />
   <link rel="shortcut icon" type="image/png" href="./home/assets/spotify-favicon.png" />
@@ -51,8 +51,8 @@
           <i class="fas fa-chevron-right container__section__arrow hide"></i>
         </div>
         <div class="container__section__user">
-          <img src="https://github.com/Gui-dev.png" alt="Gui Silva" />
-          Gui Silva
+          <img src="./home/assets/user-eg.jpg" alt="user" />
+          Erick Wendel
         </div>
       </div>
 
@@ -141,7 +141,7 @@
       </div>
       <div>
         <p>Node.js audio processing</p>
-        <p>Gui Silva</p>
+        <p>Erick Wendel</p>
       </div>
       <i class="fas fa-heart hide"></i>
     </div>
@@ -170,13 +170,13 @@
   </div>
   <div class="device-bar hide">
     <i class="fas fa-volume-up"></i>
-    <p>Listening on Gui Silva</p>
+    <p>Listening on Erick Wendel</p>
   </div>
   <script src="./home/js/animation.js"></script>
   <script>
-    // bypass prevent cache
+    //  bypass prevent cache
     window.onload = () => {
-      document.querySelector('#audio').src = '/stream?id=' + Date.now()
+      document.getElementById('audio').src = '/stream?id=' + Date.now()
     }
   </script>
 </body>
