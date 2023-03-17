@@ -1,40 +1,40 @@
 export default class View {
   constructor() {
-    this.btnStart = document.getElementById('start') 
-    this.btnStop = document.getElementById('stop') 
+    this.btnStart = document.getElementById('start')
+    this.btnStop = document.getElementById('stop')
     this.buttons = () => Array.from(document.querySelectorAll('button'))
 
     this.ignoreButtons = new Set(['unassigned'])
-    async function onBtnClick () {}
+    async function onBtnClick () { }
     this.onBtnClick = onBtnClick
 
     this.DISABLE_BTN_TIMEOUT = 500
   }
 
-  onLoad() {
+  onLoad () {
     this.changeCommandBtnsVisibility()
     this.btnStart.onclick = this.onStartClicked.bind(this)
   }
 
-  changeCommandBtnsVisibility(hide = true) {
+  changeCommandBtnsVisibility (hide = true) {
     Array.from(document.querySelectorAll('[name=command]'))
-    .forEach(btn => {
-      const fn = hide ? 'add' : 'remove'
-      btn.classList[fn]('unassigned')
-      function onClickReset() {}
-      btn.onclick = onClickReset
-    })
+      .forEach(btn => {
+        const fn = hide ? 'add' : 'remove'
+        btn.classList[fn]('unassigned')
+        function onClickReset () { }
+        btn.onclick = onClickReset
+      })
   }
-  configureOnBtnClick(fn) {
+  configureOnBtnClick (fn) {
     this.onBtnClick = fn
   }
 
-  async onStartClicked({
+  async onStartClicked ({
     srcElement: {
       innerText
     }
   }) {
-    const btnText =  innerText
+    const btnText = innerText
     await this.onBtnClick(btnText)
     this.toggleBtnStart()
     this.changeCommandBtnsVisibility(false)
@@ -44,11 +44,11 @@ export default class View {
       .forEach(this.setupBtnAction.bind(this))
   }
 
-  setupBtnAction(btn) {
+  setupBtnAction (btn) {
     const text = btn.innerText.toLowerCase()
-    if(text.includes('start')) return;
+    if (text.includes('start')) return;
 
-    if(text.includes('stop')) {
+    if (text.includes('stop')) {
       btn.onclick = this.onStopBtn.bind(this)
       return
     }
@@ -56,8 +56,8 @@ export default class View {
     btn.onclick = this.onCommandClick.bind(this)
   }
 
-  async onCommandClick(btn) {
-    const { 
+  async onCommandClick (btn) {
+    const {
       srcElement: {
         classList,
         innerText
@@ -73,8 +73,8 @@ export default class View {
     )
   }
 
-  toggleDisableCommandBtn(classList) {
-    if(!classList.contains('active')) {
+  toggleDisableCommandBtn (classList) {
+    if (!classList.contains('active')) {
       classList.add('active')
       return
     }
@@ -82,7 +82,7 @@ export default class View {
     classList.remove('active')
   }
 
-  onStopBtn({
+  onStopBtn ({
     srcElement: {
       innerText
     }
@@ -93,13 +93,14 @@ export default class View {
     return this.onBtnClick(innerText)
   }
 
-  notIsUnassignedButton(btn) {
+  notIsUnassignedButton (btn) {
     const classes = Array.from(btn.classList)
 
     return !(!!classes.find(item => this.ignoreButtons.has(item)))
   }
-  toggleBtnStart(active = true) {
-    if(active) {
+
+  toggleBtnStart (active = true) {
+    if (active) {
       this.btnStart.classList.add('hidden')
       this.btnStop.classList.remove('hidden')
       return;

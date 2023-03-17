@@ -36,11 +36,6 @@ async function routes (request, response) {
       stream
     } = await controller.getFileStream(homeHTML)
 
-    // padrão do response é text/html
-    // response.writeHead(200, {
-    //   'Content-Type': 'text/html'
-    // })
-
     return stream.pipe(response)
   }
 
@@ -48,11 +43,6 @@ async function routes (request, response) {
     const {
       stream
     } = await controller.getFileStream(controllerHTML)
-
-    // padrão do response é text/html
-    // response.writeHead(200, {
-    //   'Content-Type': 'text/html'
-    // })
 
     return stream.pipe(response)
   }

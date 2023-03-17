@@ -45,7 +45,7 @@ export class Service {
     this.currentReadable = {}
   }
 
-  createClientStream() {
+  createClientStream () {
     const id = randomUUID()
     const clientStream = new PassThrough()
     this.clientStreams.set(id, clientStream)
@@ -57,15 +57,15 @@ export class Service {
 
   }
 
-  removeClientStream(id) {
+  removeClientStream (id) {
     this.clientStreams.delete(id)
   }
 
-  _executeSoxCommand(args) {
+  _executeSoxCommand (args) {
     return childProcess.spawn('sox', args)
   }
 
-  async getBitRate(song) {
+  async getBitRate (song) {
     try {
       const args = [
         '--i', // info
@@ -97,7 +97,7 @@ export class Service {
     }
   }
 
-  broadCast() {
+  broadCast () {
     return new Writable({
       write: (chunk, enc, cb) => {
         for (const [id, stream] of this.clientStreams) {
@@ -114,7 +114,7 @@ export class Service {
       }
     })
   }
-  async startStreamming() {
+  async startStreamming () {
     logger.info(`starting with ${this.currentSong}`)
     const bitRate = this.currentBitRate = (await this.getBitRate(this.currentSong)) / bitRateDivisor
     const throttleTransform = this.throttleTransform = new Throttle(bitRate)
@@ -126,18 +126,16 @@ export class Service {
     )
   }
 
-  stopStreamming() {
+  stopStreamming () {
     this.throttleTransform?.end?.()
   }
 
-  createFileStream(filename) {
+  createFileStream (filename) {
     return fs.createReadStream(filename)
   }
 
-  async getFileInfo(file) {
-    // file = home/index.html
+  async getFileInfo (file) {
     const fullFilePath = join(publicDirectory, file)
-    // valida se existe, se não existe estoura erro!!
     await fsPromises.access(fullFilePath)
     const fileType = extname(fullFilePath)
     return {
@@ -146,7 +144,7 @@ export class Service {
     }
   }
 
-  async getFileStream(file) {
+  async getFileStream (file) {
     const {
       name,
       type
@@ -157,7 +155,7 @@ export class Service {
     }
   }
 
-  async readFxByName(fxName) {
+  async readFxByName (fxName) {
     const songs = await fsPromises.readdir(fxDirectory)
     const chosenSong = songs.find(filename => filename.toLowerCase().includes(fxName))
     if (!chosenSong) return Promise.reject(`the song ${fxName} wasn't found!`)
@@ -165,7 +163,7 @@ export class Service {
     return path.join(fxDirectory, chosenSong)
   }
 
-  appendFxStream(fx) {
+  appendFxStream (fx) {
     const throttleTransformable = new Throttle(this.currentBitRate)
     streamsPromises.pipeline(
       throttleTransformable,
@@ -190,8 +188,8 @@ export class Service {
     this.currentReadable.unpipe(this.throttleTransform)
   }
 
- 
-  mergeAudioStreams(song, readable) {
+
+  mergeAudioStreams (song, readable) {
     const transformStream = PassThrough()
     const args = [
       '-t', audioMediaType,
@@ -213,16 +211,16 @@ export class Service {
     // plugamos a stream de conversacao
     // na entrada de dados do terminal
     streamsPromises.pipeline(
-        readable,
-        stdin
-      )
-      // .catch(error => logger.error(`error on sending stream to sox: ${error}`))
+      readable,
+      stdin
+    )
+    // .catch(error => logger.error(`error on sending stream to sox: ${error}`))
 
     streamsPromises.pipeline(
-        stdout,
-        transformStream
-      )
-      // .catch(error => logger.error(`error on receiving stream from sox: ${error}`))
+      stdout,
+      transformStream
+    )
+    // .catch(error => logger.error(`error on receiving stream from sox: ${error}`))
 
     return transformStream
   }

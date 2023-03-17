@@ -10,34 +10,36 @@ export class Controller {
     this.service = new Service()
   }
 
-  async getFileStream(filename) {
+  async getFileStream (filename) {
     return this.service.getFileStream(filename)
   }
-  async handleCommand({ command }) {
+
+  async handleCommand ({ command }) {
     logger.info(`command received: ${command}`)
     const result = {
       result: 'ok'
     }
 
     const cmd = command.toLowerCase()
-    if(cmd.includes('start')) {
+
+    if (cmd.includes('start')) {
       this.service.startStreamming()
       return result
     }
 
-    if(cmd.includes('stop')) {
+    if (cmd.includes('stop')) {
       this.service.stopStreamming()
       return result
     }
     const chosenFx = await this.service.readFxByName(cmd)
     logger.info(`added fx to service: ${chosenFx}`)
     this.service.appendFxStream(chosenFx)
-    
+
     return result
-    
+
   }
 
-  createClientStream() {
+  createClientStream () {
     const {
       id,
       clientStream
