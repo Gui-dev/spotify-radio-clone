@@ -8,7 +8,7 @@
     "start": "node 'server/index.js'",
     "dev": "nodemon 'server/index.js'",
     "dev:docker": "docker compose up --build dev",
-    "test": "LOG_DISABLED=true NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --no-cache",
+    "test": "LOG_DISABLED=true NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --force-exit --detectOpenHandles --no-cache",
     "test:watch": "LOG_DISABLED=true NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --no-cache --watchAll",
     "test:coverage": "LOG_DISABLED=true NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --no-cache --coverage 'server/__tests__' 'public/__tests__'",
     "test:e2e": "LOG_DISABLED=true NODE_OPTIONS='--experimental-vm-modules --no-warnings' jest --no-cache 'server/__tests__' 'public/__tests__'",
